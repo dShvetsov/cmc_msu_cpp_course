@@ -66,7 +66,7 @@ namespace bintree {
         static TNodePtr fork(T v, TNodePtr left, TNodePtr right) {
             // std::make_shared requires a public constructor
             // So we cann't use it
-            TNodePtr ptr (new TNode(v, left.get(), right.get()));
+            TNodePtr ptr (new TNode(v, left, right));
             setParent(ptr->getLeft(), ptr);
             setParent(ptr->getRight(), ptr);
             return ptr;
@@ -111,7 +111,10 @@ namespace bintree {
             : value(v)
         {
         }
-        TNode(T v, TNode* left, TNode* right)
+
+        // We can't use a raw pointers becouse of the same problem as in
+        // fork method
+        TNode(T v, TNodePtr left, TNodePtr right)
             : value(v)
             , left(left)
             , right(right)
