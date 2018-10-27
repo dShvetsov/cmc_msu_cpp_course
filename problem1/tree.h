@@ -53,11 +53,16 @@ namespace bintree {
         }
 
         static TNodePtr createLeaf(T v) {
-            return std::make_shared<TNode>(v);
+            // std::make_shared requires a public constructor
+            // So we cann't use it
+            TNodePtr ptr(new TNode(v));
+            return ptr;
         }
 
         static TNodePtr fork(T v, TNode* left, TNode* right) {
-            TNodePtr ptr = std::make_shared<TNode>(v, left, right);
+            // std::make_shared requires a public constructor
+            // So we cann't use it
+            TNodePtr ptr (new TNode(v, left, right));
             setParent(ptr->getLeft(), ptr);
             setParent(ptr->getRight(), ptr);
             return ptr;
